@@ -4,7 +4,7 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/mouse.h>
-#include <input/processors.dtsi>
+#include <dt-bindings/input/input-event-codes.h>
 
 / {
     behaviors {
@@ -14,9 +14,10 @@
             #binding-cells = <1>;
             x-input-code = <INPUT_REL_X>;
             y-input-code = <INPUT_REL_Y>;
-            time-to-max-speed-ms = <500>; // Время, за которое курсор достигает максимальной скорости. Чем меньше, тем быстрее разгон
-            acceleration-exponent = <1>; // Кривая ускорения курсора. 1 = линейное ускорование. Большие значения = быстрый рост скорости при увеличении движения
+            time-to-max-speed-ms = <500>;
+            acceleration-exponent = <1>;
         };
+        // остальные behaviors...
         hml: homewrow_mods_left {
             compatible = "zmk,behavior-hold-tap";
             label = "homewrow_mods_left";
@@ -29,6 +30,7 @@
             require-prior-idle-ms = <250>;
             hold-trigger-on-release;
         };
+        // остальные behaviors остаются без изменений...
         hmr: hmr {
             compatible = "zmk,behavior-hold-tap";
             label = "HMR";
@@ -49,6 +51,7 @@
             tapping-term-ms = <40>;
             flavor = "tap-preferred";
         };
+        // макросы остаются без изменений...
         phrase_proshu: phrase_proshu {
             compatible = "zmk,behavior-macro";
             label = "phrase_proshu";
@@ -130,27 +133,6 @@
                 <&kp ENTER>,
                 <&macro_release>,
                 <&kp LCTRL>;
-        };
-    };
-
-    input_processors {
-        zip_mmv_slow: zip_mmv_slow {
-            compatible = "zmk,input-processor-behavior";
-            #input-processor-cells = <0>;
-            device = <&mmv_slow>;
-            type = <INPUT_EV_REL>;
-            codes = <INPUT_REL_X INPUT_REL_Y>;
-        };
-    };
-
-    trackball_listener: trackball_listener {
-        compatible = "zmk,input-listener";
-        device = <&trackball>;
-        input-processors = <&zip_xy_scaler 3 3>;
-        
-        mouse_slow_mode: mouse_slow_mode {
-            layers = <2>; // auto_mouse слой
-            input-processors = <&zip_mmv_slow>;
         };
     };
 
