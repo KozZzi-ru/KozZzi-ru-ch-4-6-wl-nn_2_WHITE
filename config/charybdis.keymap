@@ -1,4 +1,5 @@
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 30
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 1500
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 35
 
 #include <dt-bindings/zmk/pointing.h>
 #include <behaviors.dtsi>
@@ -7,6 +8,16 @@
 
 / {
     behaviors {
+
+        // Кастомное движение мыши с другой скоростью
+        mmv_slow: mmv_slow {
+            compatible = "zmk,behavior-input-two-axis";
+            x-input-code = <INPUT_REL_X>;
+            y-input-code = <INPUT_REL_Y>;
+            time-to-max-speed-ms = <500>;  // Время, за которое курсор достигает максимальной скорости. Чем меньше, тем быстрее разгон
+            acceleration-exponent = <1,1>;   // Кривая ускорения курсора. 1 = линейное ускорение. Большие значения = быстрый рост скорости при увеличении движения
+        };
+
         hml: homewrow_mods_left {
             compatible = "zmk,behavior-hold-tap";
             label = "homewrow_mods_left";
