@@ -1,30 +1,26 @@
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 60
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1200
-
-#include <dt-bindings/zmk/pointing.h>
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/mouse.h>
+#include <input/processors.dtsi>
 
 / {
     behaviors {
-
         // Кастомное движение мыши
         mmv_slow: mmv_slow {
             compatible = "zmk,behavior-input-two-axis";
             #binding-cells = <1>;
             x-input-code = <INPUT_REL_X>;
             y-input-code = <INPUT_REL_Y>;
-            time-to-max-speed-ms = <500>;  // Время, за которое курсор достигает максимальной скорости. Чем меньше, тем быстрее разгон
-            acceleration-exponent = <1>;   // Кривая ускорения курсора. 1 = линейное ускорование. Большие значения = быстрый рост скорости при увеличении движения
+            time-to-max-speed-ms = <500>; // Время, за которое курсор достигает максимальной скорости. Чем меньше, тем быстрее разгон
+            acceleration-exponent = <1>; // Кривая ускорения курсора. 1 = линейное ускорование. Большие значения = быстрый рост скорости при увеличении движения
         };
-
-
         hml: homewrow_mods_left {
             compatible = "zmk,behavior-hold-tap";
             label = "homewrow_mods_left";
             bindings = <&kp>, <&kp>;
-
             #binding-cells = <2>;
             hold-trigger-key-positions = <6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 42 43 44 45 46 47 53 54 55 56 57>;
             tapping-term-ms = <300>;
@@ -33,12 +29,10 @@
             require-prior-idle-ms = <250>;
             hold-trigger-on-release;
         };
-
         hmr: hmr {
             compatible = "zmk,behavior-hold-tap";
             label = "HMR";
             bindings = <&kp>, <&kp>;
-
             #binding-cells = <2>;
             tapping-term-ms = <300>;
             hold-trigger-key-positions = <0 1 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38 39 40 41 48 49 50 51 52 2 3 4 5>;
@@ -47,17 +41,14 @@
             require-prior-idle-ms = <250>;
             hold-trigger-on-release;
         };
-
         tap_preferred: tap_preferred {
             compatible = "zmk,behavior-hold-tap";
             label = "TAP_PREFERRED";
             bindings = <&mo>, <&kp>;
-
             #binding-cells = <2>;
             tapping-term-ms = <40>;
             flavor = "tap-preferred";
         };
-
         phrase_proshu: phrase_proshu {
             compatible = "zmk,behavior-macro";
             label = "phrase_proshu";
@@ -108,7 +99,6 @@
                 <&macro_release>,
                 <&kp LCTRL>;
         };
-
         phrase_spasibo: phrase_spasibo {
             compatible = "zmk,behavior-macro";
             label = "phrase_spasibo";
@@ -143,9 +133,29 @@
         };
     };
 
+    input_processors {
+        zip_mmv_slow: zip_mmv_slow {
+            compatible = "zmk,input-processor-behavior";
+            #input-processor-cells = <0>;
+            device = <&mmv_slow>;
+            type = <INPUT_EV_REL>;
+            codes = <INPUT_REL_X INPUT_REL_Y>;
+        };
+    };
+
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
+        input-processors = <&zip_xy_scaler 3 3>;
+        
+        mouse_slow_mode: mouse_slow_mode {
+            layers = <2>; // auto_mouse слой
+            input-processors = <&zip_mmv_slow>;
+        };
+    };
+
     combos {
         compatible = "zmk,combos";
-
         minus { bindings = <&kp MINUS>; key-positions = <31 30>; };
         par { bindings = <&kp RIGHT_PARENTHESIS>; key-positions = <31 32>; require-prior-idle-ms = <100>; };
         par2 { bindings = <&kp LEFT_PARENTHESIS>; key-positions = <27 28>; require-prior-idle-ms = <100>; };
@@ -175,85 +185,75 @@
 
     keymap {
         compatible = "zmk,keymap";
-
         QWERTY { bindings = <
-&kp GRAVE   &kp N1      &kp N2                  &kp N3        &kp N4         &kp N5              &kp N6           &kp N7      &kp N8     &kp N9    &kp N0     &kp MINUS
-&kp TAB     &kp Q       &kp W                   &kp E         &kp R          &kp T               &kp Y            &kp U       &kp I      &kp O     &kp P      &kp LEFT_BRACKET
-&kp LSHFT   &kp A       &kp S                   &kp D         &kp F          &kp G               &kp H            &kp J       &kp K      &kp L     &kp SEMI   &kp APOS
-&kp LCTRL   &kp Z       &kp X                   &kp C         &kp V          &kp B               &kp N            &kp M       &kp COMMA  &kp DOT   &lt 4 FSLH   &lt 3 RSHIFT
-            &kp LGUI    &lt 1 C_AL_CALCULATOR   &lt 5 ENTER   &kp SPACE      &kp LEFT_ALT        &kp BACKSPACE    &kp RSHIFT  &kp ENTER  
-            >; };
-
+&kp GRAVE &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS
+&kp TAB &kp Q &kp W &kp E &kp R &kp T &kp Y &kp U &kp I &kp O &kp P &kp LEFT_BRACKET
+&kp LSHFT &kp A &kp S &kp D &kp F &kp G &kp H &kp J &kp K &kp L &kp SEMI &kp APOS
+&kp LCTRL &kp Z &kp X &kp C &kp V &kp B &kp N &kp M &kp COMMA &kp DOT &lt 4 FSLH &lt 3 RSHIFT
+ &kp LGUI &lt 1 C_AL_CALCULATOR &lt 5 ENTER &kp SPACE &kp LEFT_ALT &kp BACKSPACE &kp RSHIFT &kp ENTER  
+ >; };
         num_and_fun { bindings = <
-&trans  &kp F1  &kp F2          &kp F3          &kp F4           &kp F5               &trans           &trans           &trans           &trans        &trans         &trans
-&trans  &kp F6  &kp F7          &kp F8          &kp F9           &kp F10              &none            &kp NUMBER_4     &kp N5           &kp NUMBER_6  &kp KP_DIVIDE  &kp ASTERISK
-&trans  &trans  &kp HOME        &kp UP_ARROW    &kp END          &kp F11              &none            &kp NUMBER_1     &kp NUMBER_2     &kp NUMBER_3  &kp MINUS      &kp RS(EQUAL)
-&trans  &trans  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp F12              &kp KP_NUMBER_0  &kp KP_NUMBER_0  &kp KP_NUMBER_0  &kp KP_DOT    &kp EQUAL      &kp LEFT_ALT
-        &trans  &trans          &trans          &trans           &trans               &trans           &trans           &trans
-            >; };
-
+&trans &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &trans &trans &trans &trans &trans &trans
+&trans &kp F6 &kp F7 &kp F8 &kp F9 &kp F10 &none &kp NUMBER_4 &kp N5 &kp NUMBER_6 &kp KP_DIVIDE &kp ASTERISK
+&trans &trans &kp HOME &kp UP_ARROW &kp END &kp F11 &none &kp NUMBER_1 &kp NUMBER_2 &kp NUMBER_3 &kp MINUS &kp RS(EQUAL)
+&trans &trans &kp LEFT_ARROW &kp DOWN_ARROW &kp RIGHT_ARROW &kp F12 &kp KP_NUMBER_0 &kp KP_NUMBER_0 &kp KP_NUMBER_0 &kp KP_DOT &kp EQUAL &kp LEFT_ALT
+ &trans &trans &trans &trans &trans &trans &trans &trans
+ >; };
         auto_mouse { bindings = <
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans  
-        &mkp LCLK  &mkp RCLK  &trans  &trans     &mkp MCLK      &trans  &trans  &trans
-            >; };
-
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans  
+ &mkp LCLK &mkp RCLK &trans &trans &mkp MCLK &trans &trans &trans
+ >; };
         scroll { bindings = <
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &mo 4   &trans  
-        &mkp LCLK  &mkp RCLK  &trans  &trans     &mkp MCLK      &trans  &trans  &trans
-            >; };
-
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &mo 4 &trans  
+ &mkp LCLK &mkp RCLK &trans &trans &mkp MCLK &trans &trans &trans
+ >; };
         snipe_layer { bindings = <
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans  
-        &mkp LCLK  &mkp RCLK  &trans  &trans     &mkp MCLK      &trans  &trans  &trans
-            >; };
-
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans  
+ &mkp LCLK &mkp RCLK &trans &trans &mkp MCLK &trans &trans &trans
+ >; };
         corrections { bindings = <
-&trans  &trans  &trans             &trans     &trans          &trans          &trans           &trans  &trans      &trans  &trans  &trans
-&trans  &trans  &trans             &trans     &trans          &trans          &phrase_proshu   &trans  &trans      &trans  &trans  &trans
-&trans  &trans  &kp LC(BACKSPACE)  &kp LC(Z)  &kp LC(DELETE)  &trans          &phrase_spasibo  &trans  &trans      &trans  &trans  &trans
-&trans  &trans  &kp BACKSPACE      &kp LC(Z)  &kp DELETE      &trans          &trans           &trans  &trans      &trans  &trans  &trans
-        &trans  &trans             &trans     &trans          &trans          &trans           &trans  &kp DELETE    
-            >; };
-
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &phrase_proshu &trans &trans &trans &trans &trans
+&trans &trans &kp LC(BACKSPACE) &kp LC(Z) &kp LC(DELETE) &trans &phrase_spasibo &trans &trans &trans &trans &trans
+&trans &trans &kp BACKSPACE &kp LC(Z) &kp DELETE &trans &trans &trans &trans &trans &trans &trans
+ &trans &trans &trans &trans &trans &trans &trans &kp DELETE  
+ >; };
         set_bt { bindings = <
-&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4      &bootloader  &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans        &trans        &trans        &bt BT_CLR        &trans       &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans        &trans        &trans        &trans            &trans       &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans        &trans        &trans        &trans            &trans       &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans        &trans        &trans                                       &trans  &trans  &trans
-            >; };
-
+&trans &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &bootloader &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &bt BT_CLR &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans
+ >; };
         symbol { bindings = <
-&trans  &trans  &trans      &trans      &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp LS(N7)  &kp LS(N8)  &kp LS(N9)  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp LS(N4)  &kp LS(N5)  &kp LS(N6)  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp LS(N1)  &kp LS(N2)  &kp LS(N3)  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans      &trans      &trans                          &trans  &trans  &trans  &trans  &trans
-        >; };
-
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &kp LS(N7) &kp LS(N8) &kp LS(N9) &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &kp LS(N4) &kp LS(N5) &kp LS(N6) &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &kp LS(N1) &kp LS(N2) &kp LS(N3) &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+ >; };
         layer_8 { bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
-        >; };
-
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+ >; };
         layer_9 { bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans                      &trans  &none   &trans  &trans  &trans
-        >; };
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &none &trans &trans &trans
+ >; };
     };
 };
