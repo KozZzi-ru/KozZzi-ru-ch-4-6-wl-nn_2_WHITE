@@ -1,0 +1,15 @@
+// Пользовательское поведение для активации слоя "автомыши" (Variant 3)
+// Это макро обходит проблему с zmk_keymap_layer_activate()
+// которая требует 2 аргумента (layer_id, sticky)
+
+/ {
+    behaviors {
+        // Макро для активации слоя "автомыши" с правильными аргументами
+        auto_mouse_layer_activate: auto_mouse_layer_activate {
+            compatible = "zmk,behavior-macro";
+            label = "AUTO_MOUSE_LAYER_ACTIVATE";
+            #binding-cells = <0>;
+            bindings = <&macro_press &mo 3>, <&macro_pause_for_release>, <&macro_release &mo 3>;
+        };
+    };
+};
