@@ -16,3 +16,7 @@
         , <&gpio1 4  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
         ;
 };
+
+&pmw_listener {
+    status = "okay";
+};
