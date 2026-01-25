@@ -200,10 +200,10 @@
             >; };
 
         auto_mouse { bindings = <
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans          &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans          &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans          &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &kp SCROLLLOCK  &trans  
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans           &trans
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans           &trans
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans           &trans
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &lt 4 SCROLLLOCK  &trans  
         &mkp LCLK  &mkp RCLK  &trans  &trans     &mkp MCLK      &trans  &trans  &trans
             >; };
 
