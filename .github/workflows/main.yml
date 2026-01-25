@@ -6,3 +6,10 @@ jobs:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
     with:
       archive_name: firmware_WHT
+      
+  keymap_images:
+    needs: build
+    permissions:
+      contents: write
+    uses: ./.github/workflows/draw_keymaps.yaml
+    # credit to https://github.com/caksoylar/keymap-drawer
