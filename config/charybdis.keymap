@@ -18,7 +18,6 @@
             acceleration-exponent = <1>;   // Кривая ускорения курсора. 1 = линейное ускорование. Большие значения = быстрый рост скорости при увеличении движения
         };
 
-
         hml: homewrow_mods_left {
             compatible = "zmk,behavior-hold-tap";
             label = "homewrow_mods_left";
@@ -154,7 +153,7 @@
         equal { bindings = <&kp EQUAL>; key-positions = <40 41>; };
         plus { bindings = <&kp PLUS>; key-positions = <18 19>; };
         esc { bindings = <&kp ESCAPE>; key-positions = <0 1>; };
-        LAYER_BT { bindings = <&mo 6>; key-positions = <36 47>; };
+        LAYER_BT { bindings = <&mo 5>; key-positions = <36 47>; };
         home { bindings = <&kp HOME>; key-positions = <10 22>; layers = <1>; };
         end { bindings = <&kp END>; key-positions = <11 23>; layers = <1>; };
         pg_up { bindings = <&kp PAGE_UP>; key-positions = <10 11>; layers = <1>; };
@@ -179,8 +178,8 @@
 &kp GRAVE   &kp N1      &kp N2                  &kp N3        &kp N4         &kp N5              &kp N6           &kp N7      &kp N8     &kp N9    &kp N0     &kp MINUS
 &kp TAB     &kp Q       &kp W                   &kp E         &kp R          &kp T               &kp Y            &kp U       &kp I      &kp O     &kp P      &kp LEFT_BRACKET
 &kp LSHFT   &kp A       &kp S                   &kp D         &kp F          &kp G               &kp H            &kp J       &kp K      &kp L     &kp SEMI   &kp APOS
-&kp LCTRL   &kp Z       &kp X                   &kp C         &kp V          &kp B               &kp N            &kp M       &kp COMMA  &kp DOT   &kp FSLH   &mo 3
-            &kp LGUI    &lt 1 C_AL_CALCULATOR   &lt 5 ENTER   &kp SPACE      &kp LEFT_ALT        &kp BACKSPACE    &kp RSHIFT  &kp ENTER  
+&kp LCTRL   &kp Z       &kp X                   &kp C         &kp V          &kp B               &kp N            &kp M       &kp COMMA  &kp DOT   &kp FSLH   &mo 2
+            &kp LGUI    &lt 1 C_AL_CALCULATOR   &lt 4 ENTER   &kp SPACE      &kp LEFT_ALT        &kp BACKSPACE    &kp RSHIFT  &kp ENTER  
             >; };
 
         num_and_fun { bindings = <
@@ -188,22 +187,14 @@
 &trans  &kp F6              &kp F7              &kp F8          &kp F9              &kp F10              &kp LPAR         &kp NUMBER_7     &kp NUMBER_8     &kp NUMBER_9  &kp KP_DIVIDE  &kp ASTERISK
 &trans  &kp LA(LEFT_ARROW)  &kp LC(LEFT_ARROW)  &kp UP_ARROW    &kp LC(RIGHT_ARROW)  &kp F11              &kp RPAR         &kp NUMBER_4     &kp NUMBER_5     &kp NUMBER_6  &kp MINUS      &kp RS(EQUAL)
 &trans  &kp LA(RIGHT_ARROW) &kp LEFT_ARROW      &kp DOWN_ARROW  &kp RIGHT_ARROW     &kp F12              &kp KP_NUMBER_0  &kp NUMBER_1     &kp NUMBER_2     &kp NUMBER_3  &kp KP_DOT     &kp LEFT_ALT
-        &trans  &trans          &trans          &trans          &trans               &trans           &trans           &trans
-            >; };
-
-        scroll { bindings = <
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans          &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans          &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans          &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans          &trans  
-        &mkp LCLK  &mkp RCLK  &trans  &trans     &mkp MCLK      &trans  &trans  &trans
+        &trans              &trans              &trans          &trans              &trans               &trans           &trans           &trans
             >; };
 
         auto_mouse { bindings = <
 &trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans           &trans
 &trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans           &trans
 &trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans           &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &lt 4 SCROLLLOCK  &trans  
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &lt 3 SCROLLLOCK &trans  
         &mkp LCLK  &mkp RCLK  &trans  &trans     &mkp MCLK      &trans  &trans  &trans
             >; };
 
@@ -228,31 +219,7 @@
 &trans  &trans        &trans        &trans        &trans        &bt BT_CLR        &trans       &trans  &trans  &trans  &trans  &trans
 &trans  &trans        &trans        &trans        &trans        &trans            &trans       &trans  &trans  &trans  &trans  &trans
 &trans  &trans        &trans        &trans        &trans        &trans            &trans       &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans        &trans        &trans                                       &trans  &trans  &trans
+        &trans        &trans        &trans        &trans        &trans                         &trans  &trans  &trans
             >; };
-
-        symbol { bindings = <
-&trans  &trans  &trans      &trans      &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp LS(N7)  &kp LS(N8)  &kp LS(N9)  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp LS(N4)  &kp LS(N5)  &kp LS(N6)  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp LS(N1)  &kp LS(N2)  &kp LS(N3)  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans      &trans      &trans                          &trans  &trans  &trans
-        >; };
-
-        layer_8 { bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans
-        >; };
-
-        layer_9 { bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans                      &trans  &none   &trans
-        >; };
     };
 };
