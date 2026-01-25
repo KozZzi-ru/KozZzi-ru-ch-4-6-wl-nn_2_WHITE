@@ -44,6 +44,19 @@ KozZzi adopted
 - **Комбо-диаграммы:** отдельные, масштаб x2
 - **Маппинг ZMK-клавиш:** сокращенные названия
 
+### 3. `config/charybdis.json`
+
+**Физическое описание раскладки** Charybdis 4x6.
+
+**Что содержит:**
+- **Координаты** каждой клавиши (x, y, rotation)
+- **Два layout:** `default_transform` и `charybdis_6col_layout`
+- **56 клавиш:** 48 основных + 8 тамбовых (с учетом трекбола)
+
+**Назначение:**
+- Используется `keymap-drawer` для определения позиций клавиш
+- Автоматически обнаруживается workflow при наличии в `config/`
+
 ---
 
 ## Измененные файлы
@@ -122,7 +135,7 @@ keymap_images:
 3. **Draw keymaps** (если build успешен):
    - Установка `keymap-drawer`
    - Инициализация west modules
-   - Парсинг `charybdis.keymap` → `charybdis.yaml`
+   - Парсинг `charybdis.keymap` + `charybdis.json` → `charybdis.yaml`
    - Генерация `charybdis.svg`
    - Авто-коммит изменений
 
