@@ -31,31 +31,25 @@ jobs:
           ls -lah artifacts/
           find artifacts/ -type f
           
-      - name: Package UF2 + SVG together
+      - name: Prepare package folder
         run: |
-          mkdir -p package
+          mkdir -p firmware_WHT_SVG
           
           # Copy UF2 files
           if [ -d "artifacts/firmware_WHT" ]; then
-            find artifacts/firmware_WHT -name "*.uf2" -exec cp {} package/ \;
+            find artifacts/firmware_WHT -name "*.uf2" -exec cp {} firmware_WHT_SVG/ \;
           fi
           
           # Copy SVG file
           if [ -d "artifacts/keymap_raw_files" ]; then
-            find artifacts/keymap_raw_files -name "*.svg" -exec cp {} package/ \;
+            find artifacts/keymap_raw_files -name "*.svg" -exec cp {} firmware_WHT_SVG/ \;
           fi
           
           echo "=== Package contents ==="
-          ls -lah package/
-          
-          # Create final zip
-          cd package
-          zip -r ../firmware_WHT_SVG.zip *
-          cd ..
-          ls -lah firmware_WHT_SVG.zip
+          ls -lah firmware_WHT_SVG/
           
       - name: Upload final package
         uses: actions/upload-artifact@v4
         with:
           name: firmware_WHT_SVG
-          path: firmware_WHT_SVG.zip
+          path: firmware_WHT_SVG/
