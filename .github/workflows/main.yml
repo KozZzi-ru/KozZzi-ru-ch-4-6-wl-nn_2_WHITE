@@ -2,14 +2,45 @@ name: Build ZMK firmware
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
+  keymap_images:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/draw_keymaps.yaml
+    with:
+      destination: 'both'
+    
   build:
+    needs: keymap_images
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
     with:
       archive_name: firmware_WHT
       
-  keymap_images:
-    needs: build
-    permissions:
-      contents: write
-    uses: ./.github/workflows/draw_keymaps.yaml
-    # credit to https://github.com/caksoylar/keymap-drawer
+  package_with_keymap:
+    needs: [build, keymap_images]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download firmware artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: firmware_WHT
+          path: firmware
+          
+      - name: Download keymap SVG
+        uses: actions/download-artifact@v4
+        with:
+          name: keymap_layouts
+          path: keymap
+          
+      - name: Add SVG to firmware archive
+        run: |
+          cd firmware
+          unzip -q firmware_WHT.zip -d extracted
+          cp ../keymap/*.svg extracted/
+          cd extracted
+          zip -r ../firmware_WHT_with_keymap.zip *
+          
+      - name: Upload final package
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware_WHT_complete
+          path: firmware/firmware_WHT_with_keymap.zip
