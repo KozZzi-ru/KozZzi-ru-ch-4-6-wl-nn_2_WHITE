@@ -8,6 +8,7 @@ jobs:
     uses: ./.github/workflows/draw_keymaps.yaml
     with:
       destination: 'both'
+      artifact_name: 'keymap_raw_files'
     
   build:
     needs: keymap_images
@@ -18,48 +19,43 @@ jobs:
   package_with_keymap:
     needs: [build, keymap_images]
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: write
     steps:
-      - name: Download firmware artifact
+      - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          name: firmware_WHT
-          path: firmware
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.run_id }}
+          path: artifacts
           
-      - name: Download keymap SVG
-        uses: actions/download-artifact@v4
-        with:
-          name: keymap_layouts
-          path: keymap
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.run_id }}
-          
-      - name: List downloaded files
+      - name: List all downloaded files
         run: |
-          echo "=== Firmware files ==="
-          ls -lah firmware/
-          echo "=== Keymap files ==="
-          ls -lah keymap/
+          echo "=== All artifacts structure ==="
+          ls -lah artifacts/
+          find artifacts/ -type f
           
-      - name: Add SVG to firmware archive
+      - name: Package UF2 + SVG together
         run: |
-          cd firmware
-          # Check if zip exists
-          if [ ! -f firmware_WHT.zip ]; then
-            echo "ERROR: firmware_WHT.zip not found!"
-            exit 1
+          mkdir -p package
+          
+          # Copy UF2 files
+          if [ -d "artifacts/firmware_WHT" ]; then
+            find artifacts/firmware_WHT -name "*.uf2" -exec cp {} package/ \;
           fi
-          unzip -q firmware_WHT.zip -d extracted
-          cp ../keymap/*.svg extracted/ || echo "Warning: no SVG files found"
-          cd extracted
-          zip -r ../firmware_WHT_with_keymap.zip *
+          
+          # Copy SVG file
+          if [ -d "artifacts/keymap_raw_files" ]; then
+            find artifacts/keymap_raw_files -name "*.svg" -exec cp {} package/ \;
+          fi
+          
+          echo "=== Package contents ==="
+          ls -lah package/
+          
+          # Create final zip
+          cd package
+          zip -r ../firmware_WHT_SVG.zip *
+          cd ..
+          ls -lah firmware_WHT_SVG.zip
           
       - name: Upload final package
         uses: actions/upload-artifact@v4
         with:
-          name: firmware_WHT_complete
-          path: firmware/firmware_WHT_with_keymap.zip
+          name: firmware_WHT_SVG
+          path: firmware_WHT_SVG.zip
