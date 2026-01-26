@@ -1,4 +1,4 @@
-# ch-4-6-wl-nn
+# ch-4-6-wl-nn - полностью рабочий, с моим кеймапом и генерацией раскладки в charybdis.svg 
 
 4-6 wireless zmk  
 KozZzi adopted
