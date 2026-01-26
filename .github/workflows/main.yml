@@ -18,24 +18,43 @@ jobs:
   package_with_keymap:
     needs: [build, keymap_images]
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
     steps:
       - name: Download firmware artifact
         uses: actions/download-artifact@v4
         with:
           name: firmware_WHT
           path: firmware
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.run_id }}
           
       - name: Download keymap SVG
         uses: actions/download-artifact@v4
         with:
           name: keymap_layouts
           path: keymap
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.run_id }}
+          
+      - name: List downloaded files
+        run: |
+          echo "=== Firmware files ==="
+          ls -lah firmware/
+          echo "=== Keymap files ==="
+          ls -lah keymap/
           
       - name: Add SVG to firmware archive
         run: |
           cd firmware
+          # Check if zip exists
+          if [ ! -f firmware_WHT.zip ]; then
+            echo "ERROR: firmware_WHT.zip not found!"
+            exit 1
+          fi
           unzip -q firmware_WHT.zip -d extracted
-          cp ../keymap/*.svg extracted/
+          cp ../keymap/*.svg extracted/ || echo "Warning: no SVG files found"
           cd extracted
           zip -r ../firmware_WHT_with_keymap.zip *
           
