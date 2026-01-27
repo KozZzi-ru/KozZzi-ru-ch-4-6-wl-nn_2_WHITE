@@ -18,12 +18,6 @@
             acceleration-exponent = <1>;   // Кривая ускорения курсора. 1 = линейное ускорование. Большие значения = быстрый рост скорости при увеличении движения
         };
 
-        // Плавная прокрутка с ускорением
-        msc {
-            time-to-max-speed-ms = <800>;
-            acceleration-exponent = <1>;
-        };
-
         hml: homewrow_mods_left {
             compatible = "zmk,behavior-hold-tap";
             label = "homewrow_mods_left";
