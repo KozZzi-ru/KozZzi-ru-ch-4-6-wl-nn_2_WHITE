@@ -50,13 +50,25 @@
         irq-gpios = <&gpio0 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
         /* optional features */
-        scroll-layers = <0>;   /* скролл “по умолчанию” на базовом слое */
+        scroll-layers = <0>;   /* скролл "по умолчанию" на базовом слое */
         snipe-layers = <4>;    /* режим точности, когда активен слой 4 */
         /* automouse-layer удалён: никаких авто-поднятий слоя при движении */
     };
 };
 
 / {
+  /* Переопределение поведения прокрутки для плавности */
+  behaviors {
+    msc: behavior_mouse_scroll {
+      compatible = "zmk,behavior-input-two-axis";
+      #binding-cells = <1>;
+      x-input-code = <INPUT_REL_HWHEEL>;
+      y-input-code = <INPUT_REL_WHEEL>;
+      time-to-max-speed-ms = <800>;  /* Медленный плавный разгон */
+      acceleration-exponent = <1>;   /* Плавное ускорение */
+    };
+  };
+
   trackball_listener {
     compatible = "zmk,input-listener";
     device = <&trackball>;
