@@ -1,4 +1,4 @@
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 70
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 50
 
 #include <dt-bindings/zmk/pointing.h>
 #include <behaviors.dtsi>
@@ -20,7 +20,7 @@
 
         // Плавная прокрутка с ускорением
         msc {
-            time-to-max-speed-ms = <600>;
+            time-to-max-speed-ms = <800>;
             acceleration-exponent = <1>;
         };
 
