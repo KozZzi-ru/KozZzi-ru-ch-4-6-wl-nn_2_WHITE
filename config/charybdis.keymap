@@ -1,4 +1,4 @@
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 120
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 70
 
 #include <dt-bindings/zmk/pointing.h>
 #include <behaviors.dtsi>
@@ -16,6 +16,12 @@
             y-input-code = <INPUT_REL_Y>;
             time-to-max-speed-ms = <500>;  // Время, за которое курсор достигает максимальной скорости. Чем меньше, тем быстрее разгон
             acceleration-exponent = <1>;   // Кривая ускорения курсора. 1 = линейное ускорование. Большие значения = быстрый рост скорости при увеличении движения
+        };
+
+        // Плавная прокрутка с ускорением
+        msc {
+            time-to-max-speed-ms = <600>;
+            acceleration-exponent = <1>;
         };
 
         hml: homewrow_mods_left {
