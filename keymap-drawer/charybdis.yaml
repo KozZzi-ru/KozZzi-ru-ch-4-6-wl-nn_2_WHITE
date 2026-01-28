@@ -48,7 +48,7 @@ layers:
   - ','
   - DOT
   - FSLH
-  - auto_mouse
+  - snipe
   - LGUI
   - {t: AL CALCULATOR, h: num_and_fun}
   - {t: ENTER, h: corrections}
@@ -162,7 +162,7 @@ layers:
   - L CLK
   - R CLK
   - {t: SCROLLLOCK, h: snipe}
-  - {type: held}
+  - {t: ▽, type: trans}
   - L CLK
   - R CLK
   - {t: ▽, type: trans}
@@ -218,7 +218,7 @@ layers:
   - {t: ▽, type: trans}
   - L CLK
   - R CLK
-  - {t: SCROLLLOCK, h: snipe, type: held}
+  - {t: SCROLLLOCK, h: snipe}
   - {type: held}
   - L CLK
   - R CLK
