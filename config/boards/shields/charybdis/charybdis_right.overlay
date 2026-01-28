@@ -1,5 +1,5 @@
 #include "charybdis.dtsi"
-#include <dt-bindings/zmk/input_event_codes.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 
 &default_transform {
     col-offset = <6>;
