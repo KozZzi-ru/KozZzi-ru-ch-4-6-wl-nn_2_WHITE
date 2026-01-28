@@ -159,8 +159,8 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - L CLK
+  - R CLK
   - {t: SCROLLLOCK, h: snipe}
   - {type: held}
   - L CLK
@@ -216,9 +216,9 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {type: held}
+  - L CLK
+  - R CLK
+  - {t: SCROLLLOCK, h: snipe, type: held}
   - {type: held}
   - L CLK
   - R CLK

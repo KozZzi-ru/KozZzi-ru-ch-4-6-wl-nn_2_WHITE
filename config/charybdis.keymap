@@ -191,18 +191,18 @@
             >; };
 
         auto_mouse { bindings = <
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans           &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans           &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans           &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &lt 3 SCROLLLOCK &trans  
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans     &trans     &trans            &trans
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans     &trans     &trans            &trans
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans     &trans     &trans            &trans
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &mkp LCLK  &mkp RCLK  &lt 3 SCROLLLOCK  &trans  
         &mkp LCLK  &mkp RCLK  &trans  &trans     &mkp MCLK      &trans  &trans  &trans
             >; };
 
         snipe_layer { bindings = <
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans  &trans  &trans  &trans  
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans     &trans     &trans            &trans
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans     &trans     &trans            &trans
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &trans     &trans     &trans            &trans
+&trans  &trans     &trans     &trans  &trans     &trans         &trans  &trans  &mkp LCLK  &mkp RCLK  &lt 3 SCROLLLOCK  &trans 
         &mkp LCLK  &mkp RCLK  &trans  &trans     &mkp MCLK      &trans  &trans  &trans
             >; };
 
